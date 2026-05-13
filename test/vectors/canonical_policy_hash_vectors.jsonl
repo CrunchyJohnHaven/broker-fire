@@ -1,0 +1,20 @@
+{"id":"simple_object_eq","op":"hash_equals","expect":"match","input":{"a":1,"b":2},"expected_hash":"sha256:43258cff783fe7036d8a43033f830adfc60ec037382473548ac742b888292777","note":"simple ASCII keys + small ints; baseline"}
+{"id":"nested_object_eq","op":"hash_equals","expect":"match","input":{"x":{"y":[1,2,3]}},"expected_hash":"sha256:767ff8dea74900b7fa3707df6e2f2892d6ba29200eb43ab82a4c389620219aad","note":"one level of nesting plus array"}
+{"id":"unicode_nfc_precomposed_eq","op":"hash_equals","expect":"match","input":{"name":"café"},"expected_hash":"sha256:645fa443126a8954fc6d871912b8fc67bc2ee8feae417efe55546251962ca74d","note":"NFC precomposed é must hash stably"}
+{"id":"boolean_and_null_eq","op":"hash_equals","expect":"match","input":{"ok":true,"missing":null,"shut":false},"expected_hash":"sha256:435f68133d4cc1e31a09f58862801bcc52cba71aeb82ff8a29641b9c97ac3e61","note":"true / false / null"}
+{"id":"empty_object_eq","op":"hash_equals","expect":"match","input":{},"expected_hash":"sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a","note":"sha256 of '{}'"}
+{"id":"empty_array_eq","op":"hash_equals","expect":"match","input":[],"expected_hash":"sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945","note":"sha256 of '[]'"}
+{"id":"negative_int_eq","op":"hash_equals","expect":"match","input":{"amount":-500},"expected_hash":"sha256:0d57e8537baa8baad4de83270e5249f3df63083c3814a7bcae1ec423e1f17ec1","note":"negative integers"}
+{"id":"large_int_eq","op":"hash_equals","expect":"match","input":{"id":9007199254740992},"expected_hash":"sha256:24bb430971eb50f964e63784a7ad4f3411bc7cdb1659188e371150793e872da1","note":"2^53; at the boundary of JS safe-integer"}
+{"id":"nested_deep_eq","op":"hash_equals","expect":"match","input":{"a":{"b":{"c":{"d":[1,2,3,4]}}}},"expected_hash":"sha256:8bb3348ee993f587798d91e4517988442350f36ab1863c5c201adc8229fdd699","note":"4-level nesting"}
+{"id":"spaces_in_values_eq","op":"hash_equals","expect":"match","input":{"name":"John Doe","note":"spaces are fine"},"expected_hash":"sha256:5a2bf0a56938551e04c08cc0ca8f6954635d625c228ba19990b779cb55a7270e","note":"strings retain their internal whitespace; only inter-token whitespace is stripped"}
+{"id":"emoji_unicode_eq","op":"hash_equals","expect":"match","input":{"label":"🚀 launch"},"expected_hash":"sha256:3e16ffaef86cf8bd14b904a37de61f622b1fc56276adfd72cfe559a3a7f5aaf5","note":"4-byte UTF-8 characters"}
+{"id":"key_order_invariant_a","op":"hash_equals","expect":"match","input":{"a":1,"b":2},"expected_hash":"sha256:43258cff783fe7036d8a43033f830adfc60ec037382473548ac742b888292777","note":"baseline for key-order test below"}
+{"id":"key_order_invariant_b","op":"hash_equals","expect":"match","input":{"b":2,"a":1},"expected_hash":"sha256:43258cff783fe7036d8a43033f830adfc60ec037382473548ac742b888292777","note":"keys reordered; canonical sorts; same hash as a"}
+{"id":"float_rejects","op":"hash_rejects","expect":"rejected","input":{"price":1.5},"expected_error_code":"float_rejected","note":"floats are non-deterministic across languages"}
+{"id":"non_nfc_string_rejects","op":"hash_rejects","expect":"rejected","input":{"name":"café"},"expected_error_code":"non_nfc_string","note":"NFD form (e + combining acute) must be rejected"}
+{"id":"hash_differs_amount_int","op":"hash_differs","expect":"differs","input_a":{"amount":100},"input_b":{"amount":200},"note":"one integer differs"}
+{"id":"hash_differs_array_order","op":"hash_differs","expect":"differs","input_a":[1,2],"input_b":[2,1],"note":"arrays preserve order; reorder changes hash"}
+{"id":"hash_differs_one_field","op":"hash_differs","expect":"differs","input_a":{"a":1,"b":2},"input_b":{"a":1,"b":3},"note":"single-field perturbation"}
+{"id":"hash_differs_added_field","op":"hash_differs","expect":"differs","input_a":{"a":1},"input_b":{"a":1,"b":2},"note":"adding a field changes hash"}
+{"id":"hash_differs_string_case","op":"hash_differs","expect":"differs","input_a":{"name":"john"},"input_b":{"name":"John"},"note":"case-sensitive string comparison"}

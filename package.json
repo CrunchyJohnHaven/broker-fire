@@ -1,0 +1,33 @@
+{
+  "name": "@credexai/broker-fire",
+  "version": "0.1.0",
+  "description": "Cryptographic gateway between AI agent intent and action. The protocol-design layer with 15 falsifiable synthetic gates and TS-Python parity.",
+  "license": "Apache-2.0",
+  "author": "John Bradley <john@credexai.org>",
+  "homepage": "https://technosocialism.ai",
+  "repository": "github:CrunchyJohnHaven/broker-fire",
+  "main": "dist/broker_fire.js",
+  "types": "dist/broker_fire.d.ts",
+  "type": "module",
+  "files": [
+    "dist/",
+    "src/",
+    "test/",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "tsx test/broker_fire_e2e.ts && tsx test/canonical_policy_hash_parity_test.ts",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3",
+    "@types/node": "^22.9.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
